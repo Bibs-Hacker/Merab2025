@@ -1,531 +1,312 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mercy's KCSE 2025 Encouragement System</title>
-    
-    <style>
-        /* ====================================
-           CSS STYLING (Internal)
-           ==================================== */
-        /* General Styling & Splash Screen */
-        body {
-            font-family: 'Arial', sans-serif;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 70vh;
-            background-color: #1a1a2e; /* Dark background */
-            color: white;
-            overflow-x: hidden;
-        }
+<meta charset="UTF-8">
+<title>Blazing Courage – For Mercy Merab</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+/* ==== ROOT VARIABLES ==== */
+:root {
+  --primary: #ff6b6b;
+  --secondary: #4ecdc4;
+  --light: #f7f7f7;
+  --dark: #2c0;
+  --text-light: #3ff;
+  --text-dark: #eeeeae;
+}
+[data-theme="dark"] {
+  --primary: #ff5252;
+  --secondary: #16f;
+  --light: #1e1e1e;
+  --dark: #121212;
+  --text-light: #ddd;
+  --text-dark: #fff;
+}
 
-        #splash-screen {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: #0d0d1a;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-            transition: opacity 1s ease-out; /* Fade out effect */
-        }
+/* ==== GLOBAL ==== */
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+  font-family: 'Dancing Script', cursive, sans-serif;
+  background:#111;
+  color:var(--text-light);
+  min-height:100vh;
+  overflow-x:hidden;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  position:relative;
+}
 
-        #logo {
-            width: 150px; 
-            height: 150px;
-            border-radius: 50%;
-            margin-bottom: 20px;
-            animation: pulse 1.5s infinite alternate;
-            background-color: #ff007f; /* Placeholder color if no image is present */
-            object-fit: cover; /* Ensure image covers the area nicely */
-        }
+/* ==== WAVE BACKGROUND ==== */
+.waves {
+  position:fixed;
+  inset:0;
+  z-index:-1;
+  background:linear-gradient(45deg, var(--primary), var(--secondary), #ffe66d);
+  background-size:400% 400%;
+  animation:gradient 15s ease infinite;
+}
+@keyframes gradient{
+  0%{background-position:0% 50%}
+  50%{background-position:100% 50%}
+  100%{background-position:0% 50%}
+}
+.wave {
+  position:absolute;
+  bottom:0;
+  width:200%;
+  height:250px;
+  background: rgba(255,255,255,0.1);
+  border-radius:50%;
+  animation:wave 7s linear infinite;
+}
+.wave:nth-child(2){animation-delay:-2s; height:200px; opacity:0.6;}
+.wave:nth-child(3){animation-delay:-4s; height:150px; opacity:0.4;}
+@keyframes wave{
+  0%{transform:translateX(0) translateY(0) rotate(0deg);}
+  100%{transform:translateX(-50%) translateY(-50px) rotate(360deg);}
+}
 
-        @keyframes pulse {
-            from { transform: scale(1); box-shadow: 0 0 10px #ff007f; }
-            to { transform: scale(1.05); box-shadow: 0 0 20px #ff007f, 0 0 30px #00ffff; }
-        }
+/* ==== CONTAINER ==== */
+.container {
+  max-width:520px;
+  width:90%;
+  margin:2rem auto;
+  text-align:center;
+  background:rgba(255,255,255,0.1);
+  backdrop-filter:blur(12px);
+  border-radius:20px;
+  padding:2rem;
+  box-shadow:0 10px 30px rgba(0,0,0,0.3);
+  flex:1;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+}
 
-        .hidden {
-            display: none !important;
-        }
+/* ==== LOGO & TITLE ==== */
+.logo {
+  width:150px;
+  height:150px;
+  margin:0 auto 1rem;
+  background:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="45" fill="%23ff6b6b"/><path d="M30 50c0-10 10-20 20-20s20 10 20 20" stroke="%23fff" stroke-width="6" fill="none"/><circle cx="40" cy="45" r="5" fill="%23fff"/><circle cx="60" cy="45" r="5" fill="%23fff"/></svg>') center/contain no-repeat;
+}
+h1 {
+  font-size:2.5rem;
+  background:linear-gradient(90deg, var(--primary), var(--secondary));
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+  margin-bottom:.5rem;
+}
+.tagline { font-size:1rem; opacity:0.8; }
 
-        /* --- Main Content & Background Animation --- */
-        #main-content {
-            position: relative;
-            text-align: center;
-            padding: 40px;
-            max-width: 800px;
-            width: 100%;
-            z-index: 10; /* Keep content above background */
-        }
+/* ==== BUTTONS ==== */
+.btn {
+  margin-top:1.5rem;
+  padding:.9rem 1.8rem;
+  font-family:inherit;
+  font-size:2.0rem;
+  border:none;
+  border-radius:50px;
+  cursor:pointer;
+  background:linear-gradient(45deg, var(--primary), var(--secondary));
+  color:#fff;
+  box-shadow:0 4px 15px rgba(0,0,0,0.2);
+  transition:transform .2s, box-shadow .2s;
+}
+.btn:hover { transform:translateY(-3px); box-shadow:0 6px 20px rgba(0,0,0,0.3); }
+.btn.back { background:var(--dark); }
 
-        /* Constant Changing Gradient Background */
-        .background-animation {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(45deg, #ff007f, #00ffff, #ffcc00, #ff007f, #9900ff, #00ff99); /* More colors */
-            background-size: 600% 600%; /* Larger size for smoother transition */
-            animation: colorShift 20s ease infinite alternate; /* Slower, smoother shift */
-            opacity: 0.4; /* Subtle glow */
-            z-index: 1;
-        }
+/* ==== THEME TOGGLE ==== */
+.theme-toggle {
+  position:absolute;
+  top:1rem;
+  right:1rem;
+  background:none;
+  border:none;
+  font-size:2.0rem;
+  cursor:pointer;
+}
 
-        @keyframes colorShift {
-            0% { background-position: 0% 50%; }
-            25% { background-position: 50% 0%; }
-            50% { background-position: 100% 50%; }
-            75% { background-position: 50% 100%; }
-            100% { background-position: 0% 50%; }
-        }
-        
-        /* Note: For real confetti, you'd need multiple divs/elements */
-        /* This is a simple visual to indicate movement */
-        .confetti-piece {
-            position: absolute;
-            background-color: var(--color);
-            width: var(--size);
-            height: var(--size);
-            border-radius: 50%;
-            opacity: 0;
-            animation: fall var(--duration) linear infinite var(--delay);
-            z-index: 2; /* Above gradient, below content */
-        }
+/* ==== SCREENS ==== */
+.screen { display:none; animation:fadeIn .6s forwards; }
+.screen.active { display:block; }
+@keyframes fadeIn { from{opacity:0; transform:translateY(20px);} to{opacity:1; transform:none;} }
 
-        @keyframes fall {
-            0% { transform: translate(var(--startX), var(--startY)) rotate(0deg); opacity: 1; }
-            100% { transform: translate(var(--endX), var(--endY)) rotate(720deg); opacity: 0; }
-        }
+/* ==== MESSAGE ==== */
+#message {
+  font-size:2.1rem;
+  line-height:1.8;
+  margin:2rem 0;
+  opacity:0;
+  transform:translateY(20px);
+  animation:messageReveal 1.5s 0.5s forwards;
+}
+@keyframes messageReveal {
+  to { opacity:1; transform:none; }
+}
+blockquote {
+  margin:1.5rem 0;
+  padding:1rem;
+  font-size: 30px;
+  background:rgba(255,255,255,0.15);
+  border-left:5px solid var(--secondary);
+  font-style:italic;
+}
 
-        /* --- Buttons --- */
-        button {
-            padding: 15px 30px;
-            margin: 10px;
-            border: none;
-            border-radius: 50px;
-            font-size: 1.5em;
-            font-weight: bold;
-            cursor: pointer;
-            transition: background-color 0.3s, transform 0.2s, box-shadow 0.3s;
-            background: linear-gradient(45deg, #ff007f, #ffcc00);
-            color: #1a1a2e;
-            box-shadow: 0 4px 15px rgba(255, 0, 127, 0.5);
-            z-index: 10;
-            position: relative;
-        }
+/* ==== EXTRA MOTIVATION ==== */
+.motiv-card {
+  background:rgba(255,255,255,0.1);
+  padding:1.2rem;
+  border-radius:15px;
+  margin:1rem 0;
+  position:relative;
+}
+.motiv-card .close {
+  position:absolute;
+  top:.5rem;
+  right:.5rem;
+  background:none;
+  border:none;
+  font-size:2.0rem;
+  cursor:pointer;
+}
 
-        button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(255, 0, 127, 0.8);
-        }
-
-        /* --- Modal Styling --- */
-        .modal {
-            position: fixed;
-            z-index: 2000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.85);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .modal-content {
-            background-color: #2b2b40;
-            padding: 30px;
-            border-radius: 15px;
-            width: 90%;
-            max-width: 600px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.7);
-            animation: fadeIn 0.5s ease-out;
-            text-align: left;
-            border: 3px solid #ffcc00;
-            position: relative; /* For close button positioning */
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-50px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .close-btn {
-            color: #aaa;
-            float: right;
-            font-size: 35px;
-            font-weight: bold;
-            cursor: pointer;
-            position: absolute; /* Position relative to modal-content */
-            top: 15px;
-            right: 20px;
-            z-index: 2001; /* Ensure it's above other content */
-        }
-        
-        .close-btn:hover, .close-btn:focus {
-            color: white;
-            text-decoration: none;
-        }
-        
-        #inspirational-message p {
-            line-height: 1.6;
-            margin: 15px 0;
-        }
-        
-        /* --- Gift Card Generator Styling --- */
-        #gift-card-generator {
-            margin-top: 40px;
-            padding: 20px;
-            background-color: #2b2b40;
-            border-radius: 10px;
-            text-align: left;
-            z-index: 10;
-            position: relative;
-        }
-
-        .card-inputs label, .card-inputs input {
-            display: block;
-            width: 90%;
-            margin-top: 10px;
-        }
-
-        .card-inputs input {
-            padding: 10px;
-            border: 2px solid #ffcc00;
-            border-radius: 5px;
-            background-color: #3b3b50;
-            color: white;
-            margin-bottom: 15px;
-        }
-
-        /* Card Preview Styling (Inbuilt Real-Pictured Card Look) */
-        #card-preview {
-            margin-top: 20px;
-            background: url('hero_background.jpg') no-repeat center center/cover; 
-            border: 5px solid gold;
-            border-radius: 10px;
-            padding: 20px;
-            min-height: 250px;
-            position: relative;
-            box-shadow: 0 0 20px rgba(255, 215, 0, 0.7);
-            overflow: hidden;
-            text-shadow: 1px 1px 3px black;
-            color: white; /* Ensure text is visible */
-        }
-
-        .card-content {
-            z-index: 2;
-            position: relative;
-            background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent overlay for text readability */
-            padding: 15px;
-            border-radius: 8px;
-        }
-
-        .card-profile-pic {
-            width: 100px;
-            height: 100px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 3px solid #ff007f;
-            float: right;
-            margin-left: 15px;
-            margin-bottom: 10px;
-        }
-
-        .card-title {
-            color: #ffcc00;
-            font-size: 1.5em;
-        }
-
-        .card-name {
-            font-size: 2em;
-            margin: 5px 0;
-            color: white;
-        }
-
-        .card-message {
-            font-style: italic;
-            margin-top: 10px;
-            color: #fff;
-            clear: both; /* Ensure message clears floated image */
-        }
-
-        .card-actions {
-            margin-top: 20px;
-            text-align: center;
-        }
-
-        .card-actions button {
-            background: linear-gradient(45deg, #00c6ff, #0072ff); /* Different gradient for actions */
-            color: white;
-            box-shadow: 0 4px 15px rgba(0, 198, 255, 0.5);
-        }
-        .card-actions button:hover {
-            box-shadow: 0 6px 20px rgba(0, 198, 255, 0.8);
-        }
-    </style>
+/* ==== FOOTER ==== */
+footer {
+  margin-top:2rem;
+  font-size:1.3rem;
+  opacity:0.7;
+}
+</style>
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
 </head>
 <body>
 
-    <div id="splash-screen">
-        <img src="logo.png" alt="System Logo" id="logo"> 
-        <h1>Loading Encouragement...</h1>
+<button class="theme-toggle" id="themeBtn">🌙</button>
+
+<div class="container">
+
+  <!-- ==== WELCOME SCREEN ==== -->
+  <div id="welcome" class="screen active">
+    <div class="logo"></div>
+    <h1>Blazing Courage</h1>
+    <p class="tagline"><h2>A gift of love & strength for Mercy Merab – KCSE 2025</h2></p>
+    <button class="btn" onclick="showScreen('main')">Enter</button>
+  </div>
+
+  <!-- ==== MAIN MENU ==== -->
+  <h2>
+  <div id="main" class="screen">
+    <h2 style="font-size:1.8rem;">Welcome, The Queen 👑</h2>
+    <p style="margin:1rem 0;">Tap any card to get a burst of courage.</p>
+
+    <div class="motiv-card" onclick="showScreen('msg')">
+      <strong>💌 Your Special Message</strong>
+      <button class="close" onclick="event.stopPropagation(); showScreen('main')"></button>
     </div>
 
-    <main id="main-content" class="hidden">
-        <div class="background-animation"></div> 
-        <header>
-            <h1>🌟 Welcome, KCSE Superstar Mercy! 🌟</h1>
-            <p>Your journey has been incredible. Let's conquer this final step!</p>
-        </header>
+    <div class="motiv-card" onclick="showScreen('jokes')">
+      <strong>😂 Educative Jokes We Shared</strong>
+      <button class="close" onclick="event.stopPropagation(); showScreen('main')"></button>
+    </div>
 
-        <button id="open-message-btn">✨ Tap for a Special Message ✨</button>
+    <div class="motiv-card" onclick="showScreen('team')">
+      <strong>🌟 Shout-out to the Green Queens</strong>
+      <button class="close" onclick="event.stopPropagation(); showScreen('main')"></button>
+    </div>
 
-        <button id="open-card-btn">🎁 Generate Your Hero Card 🎁</button>
+    <button class="btn back" onclick="showScreen('welcome')">← Back</button>
+  </div>
+  </h2>
 
-        <div id="message-modal" class="modal hidden">
-            <div class="modal-content">
-                <span class="close-btn" id="close-message-modal">&times;</span>
-                <h2>A Message from Your Biggest Fan! ❤️</h2>
-                <div id="inspirational-message">
-                    </div>
-            </div>
-        </div>
+  <!-- ==== MESSAGE SCREEN ==== -->
+  <div id="msg" class="screen">
+    <button class="btn back" onclick="showScreen('main')">← Back</button>
+    <h2 style="margin:1.5rem 0;">Dear Mercy Merab</h2>
+    <p id="message">
+      Take courage, my love – the exams are just a stepping stone to the real world you’ve been dreaming of.<br><br>
 
-        <section id="gift-card-generator" class="hidden">
-            <span class="close-btn" id="close-card-generator">&times;</span>
-            <h2>🏆 KCSE Hero Card Generator 🏆</h2>
-            <p>Celebrate your strength and inspire your classmates!</p>
+      You have been a **Hero Queen** since pre-unit, climbing bravely from Grade 1 to Grade 8, then taking the bold leap into Form 1. Now you’re finalising Form 4 at <strong>AHERO GIRLS HIGH SCHOOL</strong>. Every past stumble was only a lesson to make you stronger – never dwell on them.<br><br>
 
-            <div class="card-inputs">
-                <label for="candidate-name">Full Name:</label>
-                <input type="text" id="candidate-name" value="Mercy Merab" required>
+      Your parents, relatives, friends, siblings, and everyone around you have **high hopes**. We trust the strength and courage you already carry. We know the hard times you’ve conquered to reach here – that’s why **I believe in you 100%**.<br><br>
 
-                <label for="candidate-stream">Stream (e.g., Form 4 Red):</label>
-                <input type="text" id="candidate-stream" value="Form 4 Red" required>
-                
-                <label for="profile-pic-url">Profile Pic URL (Optional):</label>
-                <input type="url" id="profile-pic-url" placeholder="Paste image URL here">
-                
-                <label for="profile-pic-upload">Or Upload Profile Pic:</label>
-                <input type="file" id="profile-pic-upload" accept="image/*">
+      We promise to keep you in our prayers, just as we always have.<br><br>
 
-            </div>
+      <blockquote>
+        “The only time you should ever look back is to see how far you’ve come.” – Yours forever ❤️
+      </blockquote>
+    </p>
+    <button class="btn" onclick="readMessage()">🔊 Read Aloud</button>
+  </div>
 
-            <button id="generate-card-btn">🖼️ Generate/Update Card Preview</button>
+  <!-- ==== JOKES SCREEN ==== -->
+  <div id="jokes" class="screen">
+    <button class="btn back" onclick="showScreen('main')">← Back</button>
+    <h2>😂 Our Educative Jokes</h2>
+    <h2>
+    <ul style="text-align:left; margin:1rem 0; line-height:1.8;">
+      <li><strong>Q:</strong> Why did the math book look sad?<br><strong>A:</strong> Because it had too many <em>problems</em>! (Just like KCSE – solve them one by one 😉)</li>
+      <li><strong>Q:</strong> What do you call a sleeping bull?<br><strong>A:</strong> A <em>bull-dozer</em>! (Rest well, then bulldoze those papers!)</li>
+      <li><strong>Q:</strong> Why don’t scientists trust atoms?<br><strong>A:</strong> Because they make up <em>everything</em>! (Even your A+ grade!)</li>
+    </ul>
+    </h2>
+  </div>
 
-            <h3>Live Preview:</h3>
-            <div id="card-preview" class="kcse-card">
-                </div>
+  <!-- ==== TEAM SHOUT-OUT ==== -->
+  <div id="team" class="screen">
+    <button class="btn back" onclick="showScreen('main')">← Back</button>
+    <h2>🌟 FORM 4 RED GANG & GREEN QUEENS</h2>
+    <h1>
+    <p style="margin:1rem 0;">
+      Pass my warm regards to <strong>JOY, MOTIKA, SHARNELL, EMMA</strong> and the entire <strong>FORM 4 RED GANG</strong>! <br>
+      And to the whole <strong>FORM 4 TEAM OF AHERO GIRLS HIGH SCHOOL</strong> – the legendary **GREEN QUEENS**!<br><br>
+      We believe you’ll **shine brighter than the stars**. The sky isn’t the limit – it’s just the beginning!
+    </p>
+    </h1>
+  </div>
 
-            <div class="card-actions hidden" id="card-action-buttons">
-                <button id="download-card-btn">⬇️ Download Card as Image</button>
-            </div>
-        </section>
+  <footer>
+    Made with ❤️ by <strong>Tech Brian</strong> • KCSE 2025
+  </footer>
+</div>
 
-    </main>
+<script>
+/* ==== SCREEN NAVIGATION ==== */
+const screens = document.querySelectorAll('.screen');
+function showScreen(id){
+  screens.forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
 
-    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+/* ==== THEME TOGGLE ==== */
+const themeBtn = document.getElementById('themeBtn');
+let isDark = false;
+themeBtn.addEventListener('click',()=>{
+  isDark = !isDark;
+  document.documentElement.setAttribute('data-theme', isDark?'dark':'light');
+  themeBtn.textContent = isDark?'☀️':'🌙';
+});
 
-    <script>
-        /* ====================================
-           JAVASCRIPT LOGIC (Internal)
-           ==================================== */
-        document.addEventListener('DOMContentLoaded', () => {
-            const splashScreen = document.getElementById('splash-screen');
-            const mainContent = document.getElementById('main-content');
-            const openMessageBtn = document.getElementById('open-message-btn');
-            const openCardBtn = document.getElementById('open-card-btn');
-            const messageModal = document.getElementById('message-modal');
-            const closeMessageModalBtn = document.getElementById('close-message-modal');
-            const inspirationalMessageDiv = document.getElementById('inspirational-message');
-            const giftCardGenerator = document.getElementById('gift-card-generator');
-            const closeCardGeneratorBtn = document.getElementById('close-card-generator');
-            const generateCardBtn = document.getElementById('generate-card-btn');
-            const cardPreview = document.getElementById('card-preview');
-            const candidateNameInput = document.getElementById('candidate-name');
-            const candidateStreamInput = document.getElementById('candidate-stream');
-            const profilePicUrlInput = document.getElementById('profile-pic-url');
-            const profilePicUploadInput = document.getElementById('profile-pic-upload');
-            const whatsappContactInput = document.getElementById('whatsapp-contact');
-            const cardActionButtons = document.getElementById('card-action-buttons');
-            const downloadCardBtn = document.getElementById('download-card-btn');
-            const shareWhatsappBtn = document.getElementById('share-whatsapp-btn');
+/* ==== TEXT TO SPEECH ==== */
+function readMessage(){
+  if('speechSynthesis' in window){
+    const text = document.getElementById('message').innerText;
+    const utter = new SpeechSynthesisUtterance(text);
+    utter.rate = 0.9;
+    utter.pitch = 1.1;
+    utter.lang = 'en-US';
+    speechSynthesis.speak(utter);
+  }else{
+    alert('Sorry, your browser does not support text-to-speech.');
+  }
+}
 
-            // --- 1. Splash Screen Fade ---
-            setTimeout(() => {
-                splashScreen.style.opacity = '0';
-                setTimeout(() => {
-                    splashScreen.classList.add('hidden');
-                    mainContent.classList.remove('hidden');
-                    addConfetti(); // Start confetti after main content loads
-                    generateCard(); // Generate initial card for Mercy
-                }, 1000); // Wait for fade transition to finish (1s in CSS)
-            }, 3000); // Display splash screen for 3 seconds
-
-            // --- Confetti Animation (JS driven for more pieces) ---
-            const confettiColors = ['#ff007f', '#00ffff', '#ffcc00', '#9900ff', '#00ff99'];
-            function addConfetti() {
-                for (let i = 0; i < 50; i++) { // Generate 50 confetti pieces
-                    const piece = document.createElement('div');
-                    piece.classList.add('confetti-piece');
-                    const size = Math.random() * 8 + 5; // Size between 5px and 13px
-                    const color = confettiColors[Math.floor(Math.random() * confettiColors.length)];
-                    const duration = Math.random() * 5 + 5; // Duration between 5s and 10s
-                    const delay = Math.random() * 10; // Delay up to 10s
-                    const startX = Math.random() * window.innerWidth;
-                    const startY = -Math.random() * window.innerHeight; // Start above viewport
-                    const endX = startX + (Math.random() - 0.5) * 400; // Drift left/right
-                    const endY = window.innerHeight + Math.random() * window.innerHeight; // Fall past viewport
-
-                    piece.style.setProperty('--size', `${size}px`);
-                    piece.style.setProperty('--color', color);
-                    piece.style.setProperty('--duration', `${duration}s`);
-                    piece.style.setProperty('--delay', `${delay}s`);
-                    piece.style.setProperty('--startX', `${startX}px`);
-                    piece.style.setProperty('--startY', `${startY}px`);
-                    piece.style.setProperty('--endX', `${endX}px`);
-                    piece.style.setProperty('--endY', `${endY}px`);
-
-                    mainContent.appendChild(piece);
-                }
-            }
-
-
-            // --- 2. Motivational Message Content & Logic ---
-            const message = `
-                <p>Dear Mercy Merab, ❤️</p>
-                <p>This is it! The final lap of an incredible journey. You've been a **star** since playground class, through primary school from Grade 1 to 8, and now you're an amazing Form 4 student finalizing your secondary schooling. 🎓🌟</p>
-                <p>Your **family** is holding you close in their hearts, friends, and relatives are all sending their strongest hopes and prayers. 🙏 Much is expected from you, yes, but remember that you are **MERCY MERAB**, a girl of incredible **courage** and talent. Take a deep breath and face the KCSE exams with confidence! 💪</p>
-                <p>Don't focus on past stumbles or failures—they are just lessons learned. Put your **focus** on the papers in front of you, give it your absolute best, and know that everything is going to be **alright**. We believe in you more than words can say. ✨</p>
-                <p>Please send my warmest regards to your awesome classmates, the **Hero Team** of the **Form 4 Red** class, including **Joy, Emma, Sharnell, and the whole gang**, together with all the fantastic candidates of **Ahero Girls High School!** Go get 'em, ladies! 💖📚</p>
-                <p>I'm so incredibly proud of you. Finish strong! 🚀</p>
-                <p>With all my love and endless support.</p>
-            `;
-
-            inspirationalMessageDiv.innerHTML = message;
-
-            openMessageBtn.addEventListener('click', () => {
-                messageModal.classList.remove('hidden');
-            });
-
-            closeMessageModalBtn.addEventListener('click', () => {
-                messageModal.classList.add('hidden');
-            });
-
-            // Close modal if user clicks outside of it
-            window.addEventListener('click', (event) => {
-                if (event.target === messageModal) {
-                    messageModal.classList.add('hidden');
-                }
-            });
-
-            // --- 3. Gift Card Generator Logic ---
-
-            openCardBtn.addEventListener('click', () => {
-                giftCardGenerator.classList.remove('hidden');
-                generateCard(); // Ensure card is generated/updated when opening
-            });
-
-            closeCardGeneratorBtn.addEventListener('click', () => {
-                giftCardGenerator.classList.add('hidden');
-            });
-
-            generateCardBtn.addEventListener('click', generateCard);
-            
-            // Live preview update on input change
-            candidateNameInput.addEventListener('input', generateCard);
-            candidateStreamInput.addEventListener('input', generateCard);
-            profilePicUrlInput.addEventListener('input', generateCard);
-            profilePicUploadInput.addEventListener('change', generateCard);
-
-            function generateCard() {
-                const name = candidateNameInput.value || 'Candidate Name';
-                const stream = candidateStreamInput.value || 'Form 4';
-                let profilePic = 'default_profile.png'; // Fallback profile image 
-                
-                // Prioritize file upload
-                if (profilePicUploadInput.files.length > 0) {
-                    profilePic = URL.createObjectURL(profilePicUploadInput.files[0]);
-                } else if (profilePicUrlInput.value) {
-                    // Fallback to URL input
-                    profilePic = profilePicUrlInput.value;
-                }
-
-                const cardHTML = `
-                    <img src="${profilePic}" alt="${name}'s Profile Picture" class="card-profile-pic" onerror="this.onerror=null;this.src='default_profile.png';">
-                    <div class="card-content">
-                        <p class="card-title">🌟 **KCSE HERO: A TRIBUTE TO YOUR JOURNEY** 🌟</p>
-                        <h3 class="card-name">${name}</h3>
-                        <p><strong>Stream:</strong> ${stream} | Ahero Girls High School</p>
-                        <p class="card-message">
-                            "From your first steps in Playground Unit to the rigorous challenges of Form Four, you have consistently demonstrated incredible **resilience, determination, and brilliance**. This card is a symbol of your journey and an affirmation of the **star** you've always been. Embrace your final exams with the same **courage** and unwavering spirit. We are immensely proud of you and know you'll conquer this too! **Go for greatness!**"
-                        </p>
-                        <p style="text-align: right; margin-top: 15px; font-size: 0.9em;">**Your Future Awaits! Believe in Yourself!** ✨</p>
-                    </div>
-                `;
-                cardPreview.innerHTML = cardHTML;
-                cardActionButtons.classList.remove('hidden'); // Show action buttons after generation
-            }
-
-            // --- Download Card Functionality ---
-            downloadCardBtn.addEventListener('click', () => {
-                // Temporarily hide action buttons so they don't appear on the screenshot
-                cardActionButtons.classList.add('hidden'); 
-                
-                html2canvas(cardPreview, {
-                    scale: 2, // Increase scale for better quality
-                    useCORS: true, // Needed if your profile pic URLs are from other domains
-                }).then(canvas => {
-                    const link = document.createElement('a');
-                    link.download = `KCSE_Hero_Card_${candidateNameInput.value.replace(/\s/g, '_')}.png`;
-                    link.href = canvas.toDataURL('image/png');
-                    link.click();
-                    // Show action buttons again
-                    cardActionButtons.classList.remove('hidden'); 
-                }).catch(err => {
-                    console.error("Error generating card image:", err);
-                    alert("Failed to download card. Please try again. Ensure image URLs are valid.");
-                    cardActionButtons.classList.remove('hidden'); // Show buttons even on error
-                });
-            });
-
-            // --- Share on WhatsApp Functionality ---
-            shareWhatsappBtn.addEventListener('click', () => {
-                const name = candidateNameInput.value || 'our amazing candidate';
-                const whatsappNumber = whatsappContactInput.value.trim();
-                
-                let messageText = `🌟 Congratulations, ${name}! 🌟
-Check out your personalized KCSE Hero Card:
-
-"From your first steps in Playground Unit to the rigorous challenges of Form Four, you have consistently demonstrated incredible resilience, determination, and brilliance. This card is a symbol of your journey and an affirmation of the star you've always been. Embrace your final exams with the same courage and unwavering spirit. We are immensely proud of you and know you'll conquer this too! Go for greatness!"
-
-I've made this special for you! Remember to download the image I just generated and share it! 😊
-`;
-                // Encode the message for URL
-                const encodedMessage = encodeURIComponent(messageText);
-
-                if (whatsappNumber) {
-                    // Open WhatsApp chat directly
-                    window.open(`https://wa.me/${whatsappNumber}?text=${encodedMessage}`, '_blank');
-                } else {
-                    // Open generic WhatsApp share if no number is provided
-                    window.open(`https://wa.me/?text=${encodedMessage}`, '_blank');
-                    alert("No WhatsApp number provided. Opening general WhatsApp share. You can manually paste the message and attach the downloaded card image.");
-                }
-            });
-        });
-    </script>
+/* ==== AUTO START ==== */
+window.onload = () => {
+  // optional: start on welcome
+};
+</script>
 </body>
-</html>
+        </html>
